@@ -1,0 +1,6 @@
+<code>
+	<class name="TestClass" modifier="public">
+		<variable type="String" name="testString" init='"Joe"'/>
+		<variable type="Integer" name="testInteger" init="0"/>
+	</class>
+</code>
