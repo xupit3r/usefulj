@@ -17,31 +17,11 @@
  *   You should have received a copy of the GNU General Public License
  *   along with UsefulJ.  If not, see <http://www.gnu.org/licenses/>
  */
-package uj.test;
+package uj.jms.bench;
 
-import static org.junit.Assert.*;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-public class XMLTransformerTest
+public interface Bencher
 {
-
-	@Before
-	public void setUp() throws Exception
-	{
-	}
-
-	@After
-	public void tearDown() throws Exception
-	{
-	}
-
-	@Test
-	public void testApplyXSLT()
-	{
-		fail("Not yet implemented");
-	}
+	public int numThreads();
+	public void runIt();
 
 }

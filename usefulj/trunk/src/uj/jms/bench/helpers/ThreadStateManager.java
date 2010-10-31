@@ -17,31 +17,19 @@
  *   You should have received a copy of the GNU General Public License
  *   along with UsefulJ.  If not, see <http://www.gnu.org/licenses/>
  */
-package uj.test;
+package uj.jms.bench.helpers;
 
-import static org.junit.Assert.*;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-public class XMLTransformerTest
+public class ThreadStateManager
 {
-
-	@Before
-	public void setUp() throws Exception
-	{
-	}
-
-	@After
-	public void tearDown() throws Exception
-	{
-	}
-
-	@Test
-	public void testApplyXSLT()
-	{
-		fail("Not yet implemented");
-	}
-
+	public static boolean stop = false;
+	public static boolean record = false;
+	public static boolean pause = false;
+	
+	public static void stopThreads(){stop=true;}
+	public static void goThreads(){stop=false;}
+	public static void startRecord(){record=true;}
+	public static void stopRecord(){record=false;}
+	public static void unPauseThreads(){pause=false;}
+	public static void pauseThreads(){pause=true;}
+	
 }

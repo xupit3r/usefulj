@@ -17,49 +17,43 @@
  *   You should have received a copy of the GNU General Public License
  *   along with UsefulJ.  If not, see <http://www.gnu.org/licenses/>
  */
-package uj.test;
+package uj.jms.bench.helpers;
 
-import static org.junit.Assert.*;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-public class DatabaseConfigurationManagerTest
-{
-
-	@Before
-	public void setUp() throws Exception
-	{
+public class ThreadRegister {
+	private static int threadCount;
+	private static int totalThreadsRegistered;
+	private static int totalThreadsUnregistered;
+	
+	public static synchronized int registerThread() {
+		threadCount++;
+		totalThreadsRegistered++;
+		
+		return totalThreadsRegistered;
 	}
-
-	@After
-	public void tearDown() throws Exception
-	{
+	
+	public static synchronized void unregisterThread() {
+		threadCount--;
+		totalThreadsUnregistered++;
 	}
-
-	@Test
-	public void testGetConnectionStringStringStringStringInt()
+	
+	public static void resetCounts()
 	{
-		fail("Not yet implemented");
+		threadCount              = 0;
+		totalThreadsRegistered   = 0;
+		totalThreadsUnregistered = 0;
+		
 	}
-
-	@Test
-	public void testGetConnectionStringStringStringStringStringString()
-	{
-		fail("Not yet implemented");
+	
+	public static synchronized int getThreadCount() {
+		return threadCount;
 	}
-
-	@Test
-	public void testGetProtocol()
-	{
-		fail("Not yet implemented");
+	
+	public static synchronized int getTotalThreadsRegistered() {
+		return totalThreadsRegistered;
 	}
-
-	@Test
-	public void testRecycleConnection()
-	{
-		fail("Not yet implemented");
+	
+	public static synchronized int getTotalThreadsUnregistered() {
+		return totalThreadsUnregistered;
 	}
-
 }
+

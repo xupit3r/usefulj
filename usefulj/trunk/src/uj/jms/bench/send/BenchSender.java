@@ -17,31 +17,15 @@
  *   You should have received a copy of the GNU General Public License
  *   along with UsefulJ.  If not, see <http://www.gnu.org/licenses/>
  */
-package uj.test;
+package uj.jms.bench.send;
 
-import static org.junit.Assert.*;
+import javax.jms.JMSException;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-public class XMLTransformerTest
+public interface BenchSender
 {
-
-	@Before
-	public void setUp() throws Exception
-	{
-	}
-
-	@After
-	public void tearDown() throws Exception
-	{
-	}
-
-	@Test
-	public void testApplyXSLT()
-	{
-		fail("Not yet implemented");
-	}
-
+	public void connect();
+	public void closeConnection();
+	public boolean send();
+	public void setMsgText(String s) throws JMSException;
+	public void setMsgTime(long time) throws JMSException;
 }

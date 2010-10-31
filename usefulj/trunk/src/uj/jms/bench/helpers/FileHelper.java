@@ -17,31 +17,25 @@
  *   You should have received a copy of the GNU General Public License
  *   along with UsefulJ.  If not, see <http://www.gnu.org/licenses/>
  */
-package uj.test;
+package uj.jms.bench.helpers;
 
-import static org.junit.Assert.*;
+import java.io.File;
+import java.io.IOException;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import uj.string.StringUtils;
 
-public class XMLTransformerTest
+public class FileHelper
 {
-
-	@Before
-	public void setUp() throws Exception
+	public static synchronized String getFileText(File f)
 	{
-	}
-
-	@After
-	public void tearDown() throws Exception
-	{
-	}
-
-	@Test
-	public void testApplyXSLT()
-	{
-		fail("Not yet implemented");
+		System.out.println("Loading "+f.getAbsolutePath());
+		String ft = " ";
+		try
+		{
+			ft = StringUtils.makeString(f);
+		}catch(IOException fnf){System.err.println("[FileHelper.getFileText]: could not load file and IOException occurred.");}
+		System.out.println("File Loaded.");
+		return ft;
 	}
 
 }

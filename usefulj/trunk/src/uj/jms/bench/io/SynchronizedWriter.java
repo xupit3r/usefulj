@@ -17,31 +17,20 @@
  *   You should have received a copy of the GNU General Public License
  *   along with UsefulJ.  If not, see <http://www.gnu.org/licenses/>
  */
-package uj.test;
+package uj.jms.bench.io;
 
-import static org.junit.Assert.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-public class XMLTransformerTest
+public class SynchronizedWriter
 {
-
-	@Before
-	public void setUp() throws Exception
+	public static synchronized void writeResult(File f, String line) throws IOException
 	{
-	}
-
-	@After
-	public void tearDown() throws Exception
-	{
-	}
-
-	@Test
-	public void testApplyXSLT()
-	{
-		fail("Not yet implemented");
+		PrintWriter w = new PrintWriter(new FileWriter(f, true));
+		w.println(line);
+		w.close();
 	}
 
 }

@@ -17,31 +17,17 @@
  *   You should have received a copy of the GNU General Public License
  *   along with UsefulJ.  If not, see <http://www.gnu.org/licenses/>
  */
-package uj.test;
+package uj.jms.bench.analysis;
 
-import static org.junit.Assert.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-public class XMLTransformerTest
-{
-
-	@Before
-	public void setUp() throws Exception
+public class MedianAnalyzer
+{	
+	public static int getMedian(ArrayList<Integer> list)
 	{
-	}
-
-	@After
-	public void tearDown() throws Exception
-	{
-	}
-
-	@Test
-	public void testApplyXSLT()
-	{
-		fail("Not yet implemented");
+		Collections.sort(list);
+		return (Integer) list.get((Integer) (list.size()/2));
 	}
 
 }

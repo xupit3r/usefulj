@@ -17,31 +17,38 @@
  *   You should have received a copy of the GNU General Public License
  *   along with UsefulJ.  If not, see <http://www.gnu.org/licenses/>
  */
-package uj.test;
+package uj.jms.bench.helpers;
 
-import static org.junit.Assert.*;
+import java.io.FileNotFoundException;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-public class XMLTransformerTest
+/**
+ * Generate a Document of a Specified Size
+ * @author Joseph D'Alessandro
+ *
+ */
+public class DocumentGenerator
 {
-
-	@Before
-	public void setUp() throws Exception
+	// Doc. Size Variables
+	public final static int small  = 1;
+	public final static int medium = 2;
+	public final static int large  = 3;
+	
+	public static String getDocument(int size) throws FileNotFoundException
 	{
+		switch(size)
+		{
+			case 1: return getDoc(1024);  
+			case 2: return getDoc(4096);  
+			case 3: return getDoc(8192); 
+		}
+		return getDoc(256);
 	}
-
-	@After
-	public void tearDown() throws Exception
+	
+	private static String getDoc(int s) throws FileNotFoundException
 	{
-	}
-
-	@Test
-	public void testApplyXSLT()
-	{
-		fail("Not yet implemented");
+		String temp = "";
+		for(int i = 0; i < s; i++){temp+='a';}
+		return temp;
 	}
 
 }

@@ -17,31 +17,19 @@
  *   You should have received a copy of the GNU General Public License
  *   along with UsefulJ.  If not, see <http://www.gnu.org/licenses/>
  */
-package uj.test;
+package uj.jms.bench.io;
 
-import static org.junit.Assert.*;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-public class XMLTransformerTest
+/**
+ * Handle file I/O for benchmark suite.
+ * -- QUESTION -> Static or NOT?
+ * @author devgroup
+ *
+ */
+public class BenchWriter
 {
-
-	@Before
-	public void setUp() throws Exception
+	public BenchWriter()
 	{
-	}
-
-	@After
-	public void tearDown() throws Exception
-	{
-	}
-
-	@Test
-	public void testApplyXSLT()
-	{
-		fail("Not yet implemented");
+		
 	}
 
 }
