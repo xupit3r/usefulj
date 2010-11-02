@@ -19,39 +19,13 @@
  */
 package uj.log;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 
-public class UJLogger 
+public interface UJLogger 
 {
-	private static final String NEWLINE = "\n";
-	private static Writer ujLog;
-	public static void setStandardOut(OutputStream s) {
-		ujLog = new BufferedWriter(new OutputStreamWriter(s));
-	}
-	
-	/**
-	 * Log OUTPUT
-	 */
-	
-	public static void out(String s){
-		try {
-			ujLog.append("[OUT]"+s+NEWLINE);
-		} catch (IOException e) {System.err.println("Oh noes da log is messed up!");}
-	}
-	
-	public static void error(String s){
-		try {
-			ujLog.append("[ERROR]"+s+NEWLINE);
-		} catch (IOException e) {System.err.println("Oh noes da log is messed up!");}
-	}
-
-	public static void debug(String s){
-		try {
-			ujLog.append("[DEBUG]"+s+NEWLINE);
-		} catch (IOException e) {System.err.println("Oh noes da log is messed up!");}
-	}
+	public void setStandardOut(OutputStream s);
+	public void out(String s);
+	public void out();	
+	public void error(String s);
+	public void debug(String s);
 }

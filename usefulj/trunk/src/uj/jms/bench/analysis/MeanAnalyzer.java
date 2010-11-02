@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
+import uj.log.UJ;
+
 public class MeanAnalyzer
 {
 	public static void main(String args[])
@@ -36,7 +38,7 @@ public class MeanAnalyzer
 			int count = 0;
 			while(reader.hasNext()){sum += Integer.parseInt(reader.nextLine());count++;}
 			double mean = sum/count;
-			System.out.println("Mean: "+mean);
+			UJ.log.out("Mean: "+mean);
 		}
 		catch(FileNotFoundException fnf){fnf.printStackTrace();}
 	}
@@ -47,7 +49,7 @@ public class MeanAnalyzer
 		int count = 0;
 		Iterator<Integer> itr = list.iterator();
 		while(itr.hasNext()){sum+=itr.next();count++;}
-		System.out.println("[MEAN] Count: "+count);
+		UJ.log.out("[MEAN] Count: "+count);
 		return (int)(sum/count);
 	}
 

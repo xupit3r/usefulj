@@ -20,6 +20,7 @@
 package uj.jms.bench.helpers;
 
 import java.util.Properties;
+
 import javax.naming.Context;
 
 //Possible Additions to ActiveMQ uri ?wireFormat.maxInactivityDuration=0&connectionTimeout=3000

@@ -26,6 +26,7 @@ import uj.jms.bench.helpers.ThreadStateManager;
 import uj.jms.bench.send.BenchSender;
 import uj.jms.bench.send.QueueSender;
 import uj.jms.bench.send.TopicSender;
+import uj.log.UJ;
 
 /**
  * The Producer of messages in the simulation.
@@ -91,17 +92,17 @@ public class Producer extends Thread
 			try
 			{
 					sender.setMsgTime(System.currentTimeMillis());
-					if(!pubSend())System.out.println("[Producer] Problem Sending!");
+					if(!pubSend())UJ.log.out("[Producer] Problem Sending!");
 					if(ThreadStateManager.record) sentMsgs++;
 					else numMsgs++; //increase the number of messages to send until we are ready to record.
 					sleep(wait);
 			}
 			catch(InterruptedException ie)
 			{	
-				System.out.println("[Producer] Interrupted, Stopping Myself.");
+				UJ.log.out("[Producer] Interrupted, Stopping Myself.");
 				Thread.currentThread().interrupt();
 			}
-			catch(JMSException jex){System.out.println("[Producer] Could not set message time property!");}
+			catch(JMSException jex){UJ.log.out("[Producer] Could not set message time property!");}
 		}
 		closeBrokerConnection();
 		ThreadRegister.unregisterThread();

@@ -19,7 +19,7 @@
  */
 package uj.log;
 
-public class LogHandler {
-	public static final UJLogger theLog = new UJConsoleLogger();
+public class UJ {
+	public static final UJLogger log = new UJConsoleLogger();
 
 }

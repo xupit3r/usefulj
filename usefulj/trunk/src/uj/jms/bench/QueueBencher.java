@@ -28,6 +28,7 @@ import java.io.PrintWriter;
 import uj.jms.bench.helpers.DocumentGenerator;
 import uj.jms.bench.helpers.ThreadRegister;
 import uj.jms.bench.helpers.ThreadStateManager;
+import uj.log.UJ;
 
 /**
  * Queue based benchmarker.  Each Producer sends to
@@ -54,7 +55,7 @@ public class QueueBencher implements Bencher
 	{
 		threads = 0;
 		try{mstWriter = new PrintWriter(new FileWriter(new File(mf), true));}
-		catch(IOException io){System.out.println("Could not open MST file.");System.exit(0);}
+		catch(IOException io){UJ.log.out("Could not open MST file.");System.exit(0);}
 		pubs = createPublishers(c,mpc,sz,ra, broker);
 		subs = createSubscribers(s, broker, of, bench);
 	}
@@ -136,11 +137,11 @@ public class QueueBencher implements Bencher
 			pubs[i].start();
 		
 		// One Minute Warmup Period
-		System.out.println("Warming Up.");
+		UJ.log.out("Warming Up.");
 		start = System.currentTimeMillis();
 		do{current = System.currentTimeMillis();}
 		while((current - start) < 60000L);
-		System.out.println("Warm Up Complete.");
+		UJ.log.out("Warm Up Complete.");
 		
 		// Reset the Received Messages.
 		for(int i = 0; i < subs.length; i++)
@@ -156,11 +157,11 @@ public class QueueBencher implements Bencher
 		ThreadStateManager.stopRecord(); // Stop Recording Statistics
 		
 		// Five Minute Cool down (to make sure queues are emptied)
-		System.out.println("Cooling Down.");
+		UJ.log.out("Cooling Down.");
 		start = System.currentTimeMillis();
 		do{current = System.currentTimeMillis();}
 		while((current - start) < 30000L);
-		System.out.println("Cool Down Complete.");		
+		UJ.log.out("Cool Down Complete.");		
 		closeSubs();
 		
 		// Gather Statistics
@@ -169,7 +170,7 @@ public class QueueBencher implements Bencher
 		for(int i = 0; i < subs.length; i++)
 			rmsg+=((QueueConsumer)subs[i]).getRecMsgs();
 		
-		System.out.println("Sent: "+pmsg+" Received: "+rmsg);
+		UJ.log.out("Sent: "+pmsg+" Received: "+rmsg);
 		
 		// Write Statistics to File
 		mstWriter.println(pubs.length+","+pmsg+","+rmsg);

@@ -22,19 +22,20 @@ package uj.jms.bench.helpers;
 import java.io.File;
 import java.io.IOException;
 
+import uj.log.UJ;
 import uj.string.StringUtils;
 
 public class FileHelper
 {
 	public static synchronized String getFileText(File f)
 	{
-		System.out.println("Loading "+f.getAbsolutePath());
+		UJ.log.out("Loading "+f.getAbsolutePath());
 		String ft = " ";
 		try
 		{
 			ft = StringUtils.makeString(f);
 		}catch(IOException fnf){System.err.println("[FileHelper.getFileText]: could not load file and IOException occurred.");}
-		System.out.println("File Loaded.");
+		UJ.log.out("File Loaded.");
 		return ft;
 	}
 

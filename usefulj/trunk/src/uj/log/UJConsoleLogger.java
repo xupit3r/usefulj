@@ -19,8 +19,45 @@
  */
 package uj.log;
 
-public class UJConsoleLogger extends UJLogger {
-	public UJConsoleLogger() {
-		super.setStandardOut(System.out);
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+
+public class UJConsoleLogger implements UJLogger {
+	
+	private static final String NEWLINE = "\n";
+	private static Writer ujLog;
+	public void setStandardOut(OutputStream s) {
+		ujLog = new BufferedWriter(new OutputStreamWriter(s));
+	}
+	
+	/**
+	 * Log OUTPUT
+	 */
+	
+	public void out(String s){
+		try {
+			ujLog.append("[OUT]"+s+NEWLINE);
+		} catch (IOException e) {System.err.println("Oh noes da log is messed up!");}
+	}
+	
+	public void out(){
+		try {
+			ujLog.append(NEWLINE);
+		} catch (IOException e) {System.err.println("Oh noes da log is messed up!");}
+	}
+	
+	public void error(String s){
+		try {
+			ujLog.append("[ERROR]"+s+NEWLINE);
+		} catch (IOException e) {System.err.println("Oh noes da log is messed up!");}
+	}
+
+	public void debug(String s){
+		try {
+			ujLog.append("[DEBUG]"+s+NEWLINE);
+		} catch (IOException e) {System.err.println("Oh noes da log is messed up!");}
 	}
 }

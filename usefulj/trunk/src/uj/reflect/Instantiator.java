@@ -23,6 +23,8 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+import uj.log.UJ;
+
 public class Instantiator <E>
 {
 	
@@ -118,8 +120,8 @@ public class Instantiator <E>
 	private static void printArray(Object[] arr)
 	{
 		for(int i = 0; i < arr.length; i++)
-			System.out.print(arr[i]+" ");
-		System.out.println();
+			UJ.log.out(arr[i]+" ");
+		UJ.log.out();
 	}
 
 }

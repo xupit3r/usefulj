@@ -38,6 +38,7 @@ import javax.naming.NamingException;
 import uj.jms.bench.helpers.BenchPropertyManager;
 import uj.jms.bench.helpers.ThreadStateManager;
 import uj.jms.bench.io.SynchronizedWriter;
+import uj.log.UJ;
 
 public class TopicConsumer implements BenchConsumer
 {
@@ -76,10 +77,10 @@ public class TopicConsumer implements BenchConsumer
 		long ct = System.currentTimeMillis();
 		long st = 0L;
 		try{st = msg.getLongProperty("sendTime");}
-		catch(JMSException jex){System.out.println("Could not get send time!");}
+		catch(JMSException jex){UJ.log.out("Could not get send time!");}
 		try{if(ThreadStateManager.record)SynchronizedWriter.writeResult(logFile, theBench+","+String.valueOf((ct-st)));}
-		catch(IOException ioe){System.out.println("Could NOT write to file!");}
-		//System.out.println("Throughput time (Topic): "+(ct-st));
+		catch(IOException ioe){UJ.log.out("Could NOT write to file!");}
+		//UJ.log.out("Throughput time (Topic): "+(ct-st));
 
 	}
 
@@ -102,7 +103,7 @@ public class TopicConsumer implements BenchConsumer
 			connection.start();
 		} catch (NamingException nex)
 		{
-			System.out.println("Naming Exception: "+theTop);
+			UJ.log.out("Naming Exception: "+theTop);
 			//nex.printStackTrace();
 		} // JNDI Naming Problem
 		catch (JMSException jex)

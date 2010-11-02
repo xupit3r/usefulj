@@ -24,7 +24,7 @@ import java.io.FileNotFoundException;
 import uj.jms.bench.helpers.DocumentGenerator;
 import uj.jms.bench.helpers.ThreadRegister;
 import uj.jms.bench.helpers.ThreadStateManager;
-import uj.jms.bench.send.QueueSender;
+import uj.log.UJ;
 
 /**
  * Topic Based Benchmarker.  Create X Producers, and
@@ -106,21 +106,21 @@ public class TopicBencher implements Bencher
 		for(int i = 0; i < pubs.length; i++)
 			pubs[i].start();
 		
-		System.out.println("Warming Up.");
+		UJ.log.out("Warming Up.");
 		start = System.currentTimeMillis();
 		do{current=System.currentTimeMillis();}
 		while((current-start) < 90000); //warm cup of java?
-		System.out.println("Warm Up Complete.");
+		UJ.log.out("Warm Up Complete.");
 		
-		System.out.println("RECORDING.");
+		UJ.log.out("RECORDING.");
 		ThreadStateManager.startRecord();// start recording statistics		
 		while(true){if(ThreadRegister.getThreadCount() == 0)break;}
 		
-		System.out.println("Cooling Down.");
+		UJ.log.out("Cooling Down.");
 		start = System.currentTimeMillis();
 		do{current=System.currentTimeMillis();}
 		while((current-start) < 90000); //cool your jets!
-		System.out.println("Cool Down Complete.");
+		UJ.log.out("Cool Down Complete.");
 		
 		ThreadStateManager.stopThreads(); // Stop the Threads
 		ThreadStateManager.stopRecord(); // Stop Recording Statistics

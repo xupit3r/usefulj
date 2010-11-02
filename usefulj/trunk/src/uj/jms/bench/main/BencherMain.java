@@ -24,6 +24,7 @@ import uj.jms.bench.QueueBencher;
 import uj.jms.bench.TopicBencher;
 import uj.jms.bench.helpers.BenchPropertyManager;
 import uj.jms.bench.helpers.DocumentGenerator;
+import uj.log.UJ;
 
 public class BencherMain
 {
@@ -35,19 +36,19 @@ public class BencherMain
 		int topItr = args.length > 0 && args[0] != null ? Integer.parseInt(args[0]) : 100;
 		int mstItr = args.length > 1 && args[1] != null ? Integer.parseInt(args[1]) : 1;
 		
-		System.out.println("Topic Benchmark Iterations: "+topItr);
-		System.out.println("Max Sustainable Throughput Iterations: "+mstItr);
+		UJ.log.out("Topic Benchmark Iterations: "+topItr);
+		UJ.log.out("Max Sustainable Throughput Iterations: "+mstItr);
 
 		// Topic Based Benchmarks
-		System.out.println("*****************************************************");
-		System.out.println("***************** Topic Benchmark *******************");
-		System.out.println("*****************************************************");
+		UJ.log.out("*****************************************************");
+		UJ.log.out("***************** Topic Benchmark *******************");
+		UJ.log.out("*****************************************************");
 		runTopicBench(amq, "AMQ",topItr);
 
 		// Queue Based Benchmarks
-		System.out.println("*****************************************************");
-		System.out.println("****************** MST Benchmark ********************");
-		System.out.println("*****************************************************");
+		UJ.log.out("*****************************************************");
+		UJ.log.out("****************** MST Benchmark ********************");
+		UJ.log.out("*****************************************************");
 		findMST(amq, "AMQ",mstItr);
 
 	}

@@ -30,7 +30,6 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.Session;
-import javax.jms.TextMessage;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -38,6 +37,7 @@ import javax.naming.NamingException;
 import uj.jms.bench.helpers.BenchPropertyManager;
 import uj.jms.bench.helpers.ThreadStateManager;
 import uj.jms.bench.io.SynchronizedWriter;
+import uj.log.UJ;
 
 public class QueueConsumer implements BenchConsumer
 {
@@ -79,9 +79,9 @@ public class QueueConsumer implements BenchConsumer
 			st = msg.getLongProperty("sendTime");
 			if(!ThreadStateManager.stop && ThreadStateManager.record)recMsgs++;
 		}
-		catch(JMSException jex){System.out.println("Could not get send time!");}
+		catch(JMSException jex){UJ.log.out("Could not get send time!");}
 		try{if(ThreadStateManager.record)SynchronizedWriter.writeResult(logFile, theBench+","+String.valueOf((ct-st)));}
-		catch(IOException ioe){System.out.println("Could NOT write to file!");}
+		catch(IOException ioe){UJ.log.out("Could NOT write to file!");}
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class QueueConsumer implements BenchConsumer
 			connection.start();
 		} catch (NamingException nex)
 		{
-			System.out.println("Naming Exception: "+theQ);
+			UJ.log.out("Naming Exception: "+theQ);
 			//nex.printStackTrace();
 		} // JNDI Naming Problem
 		catch (JMSException jex)

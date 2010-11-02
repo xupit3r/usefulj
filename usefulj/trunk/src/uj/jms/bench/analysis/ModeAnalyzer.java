@@ -27,6 +27,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 
+import uj.log.UJ;
+
 public class ModeAnalyzer
 {
 	public static void main(String args[])
@@ -53,7 +55,7 @@ public class ModeAnalyzer
 				if(V >= max)
 					mode = K;
 			}
-			System.out.println("Mode: "+mode);
+			UJ.log.out("Mode: "+mode);
 		}
 		catch(FileNotFoundException fnf){fnf.printStackTrace();}
 	}
