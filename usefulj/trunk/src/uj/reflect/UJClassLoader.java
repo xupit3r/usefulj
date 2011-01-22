@@ -19,11 +19,25 @@
  */
 package uj.reflect;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 public class UJClassLoader extends ClassLoader
 {
+	/**
+	 * Map of classnames -> loaded classes
+	 */
 	private HashMap<String,Class<?>> classes = null;
+
+	/**
+	 * holder for the db connection to be used when loading class from a database
+	 */
+	private Connection dbc = null;
 	
 	public UJClassLoader()
 	{
@@ -32,11 +46,31 @@ public class UJClassLoader extends ClassLoader
 		classes = new HashMap<String,Class<?>>();
 	}
 	
+	public UJClassLoader(Connection conn)
+	{
+		//set the parent class loader.
+		super(UJClassLoader.class.getClassLoader());
+		classes = new HashMap<String,Class<?>>();
+		dbc = conn;
+	}
+	
 	public Class<?> loadClass(String name) throws ClassNotFoundException
 	{
 		return loadClass(name, true);
 	}
 	
+	/**
+	 * Given a string describing the desired class this method will find the class file
+	 * and load it into the JVM.  If the class file is already loaded in the JVM, then a 
+	 * reference to that class will be returned.
+	 * 
+	 * @param name - the name of the class to be loaded
+	 * @param res - flag indicating whether or not this method link the class
+	 * 
+	 * @return the desired class
+	 * 
+	 * @throws ClassNotFoundException if the class could not be found on any of paths
+	 */
 	public synchronized Class<?> loadClass(String name, boolean res) throws ClassNotFoundException
 	{
 		Class<?> c = null;
@@ -69,20 +103,76 @@ public class UJClassLoader extends ClassLoader
 	}
 	
 	/**
-	 * At some point I want to implement this.  Read class files from a
-	 * database server somewhere out in the world!
+	 * Provided that a DB connection was provided for the instance of this class
+	 * this method will load a class file from a database.
 	 * @param name - class name to load
-	 * @return byte array representing the binary format of the class file
+	 * @return the loaded class
 	 */
 	public Class<?> readClassFileFromDB(String name)
 	{
+		PreparedStatement stmt;
+		ResultSet rs;
 		byte[] cf = null;
+		if(dbc != null) {
+			try {
+				stmt = dbc.prepareStatement("select cf from test_classes where name = ?");
+				stmt.setString(1, name);
+				rs = stmt.executeQuery();
+				if(rs.next()) {
+					cf = rs.getBytes("cf");
+				}
+			} catch (SQLException e) {} // if an exception occurs just assume that we have the class file locally
+			if(cf != null) {
+				return defineClass(name, cf, 0, cf.length);
+			}
+		}
 		return null;
 	}
 	
 	public Class<?> findPreloadedClass(String name)
 	{
 		return (Class<?>)classes.get(name);
+	}
+	
+	
+	/**
+	 * it is assumed that className is derived from the Class.getName() call
+	 *  -- not using the string generated from that call will cause this not to work
+	 * @param className
+	 * @return a byte array containing the contents of the class file
+	 * @throws IOException
+	 */
+	public byte[] getBinaryContent(String className) throws IOException{
+		
+		// get a handle on the class file
+		InputStream is = this.getClass().getResourceAsStream("/"+className.replaceAll("\\.", "/")+".class");
+		
+		// first find out how many bytes we are dealing with
+		int bytes = 0;
+		while (true) {
+	        int data = is.read();
+	        if (data == -1) {
+	           break;
+	        }
+	        bytes++;
+		}
+		is.close();
+		
+		// next prepare data structures for reading the bytes from 
+		// the class file
+		byte[] ba = new byte[bytes];
+		int idx = 0;
+		// reset the stream position to the start
+		is = this.getClass().getResourceAsStream("/"+className.replaceAll("\\.", "/")+".class");
+		while (true) {
+	        int data = is.read();
+	        if (data == -1) {
+	           break;
+	        }
+	        ba[idx] = (byte) data;
+	        idx++;
+		}
+		return ba;
 	}
 
 }

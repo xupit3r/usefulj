@@ -25,12 +25,25 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import uj.db.DatabaseConfigurationManager;
+import uj.db.UJDBConnection;
+import uj.jms.bench.helpers.FileHelper;
+import uj.reflect.UJClassLoader;
+
 public class UJClassLoaderTest
 {
 
+	private String u = "root";
+	private String pass = "overlord";
+	private String host = "localhost";
+	private String db = "test_cl";
+	private int type = DatabaseConfigurationManager.MYSQL;
 	@Before
 	public void setUp() throws Exception
-	{
+	{		
+		UJDBConnection con = DatabaseConfigurationManager.getConnection(u, pass, host, db, type);
+		UJClassLoader ujc = new UJClassLoader(con.getConnection());
+		ujc.loadClass("uj.jms.bench.helpers.FileHelper");
 	}
 
 	@After
